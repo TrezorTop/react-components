@@ -1,0 +1,21 @@
+.Button {
+  padding: 8px;
+
+  background-color: coral;
+  color: white;
+
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+
+    opacity: 0.75;
+  }
+}
+
+.Active {
+  background-color: #ff4200;
+}
