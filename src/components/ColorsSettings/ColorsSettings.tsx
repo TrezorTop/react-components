@@ -1,29 +1,30 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useEffect } from "react";
 import classes from "./ColorsSettings.module.scss";
-import {
-  getRootStylePropertyValue,
-  setRootStylePropertyValue,
-} from "../../util/rootStyleProperties";
+import { setRootStylePropertyValue } from "../../util/rootStyleProperties";
 import { RootColorVariables } from "../../types/styleVariables";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 type IState = {
   [key in RootColorVariables]?: string;
 };
 
 const ColorsSettings: FC = () => {
-  const [state, setState] = useState<IState>({
-    [RootColorVariables.ActiveColor]: "",
-    [RootColorVariables.PrimaryColor]: "",
-  });
+  const [colorsState, setColorsState] = useLocalStorage<IState>(
+    "colorsSettings",
+    {
+      [RootColorVariables.ActiveColor]: "cyan",
+      [RootColorVariables.PrimaryColor]: "red",
+    }
+  );
 
   useEffect(() => {
-    setState({
-      [RootColorVariables.PrimaryColor]: getRootStylePropertyValue(
-        RootColorVariables.PrimaryColor
-      ),
-      [RootColorVariables.ActiveColor]: getRootStylePropertyValue(
-        RootColorVariables.ActiveColor
-      ),
+    setColorsState(colorsState);
+
+    Object.keys(colorsState).forEach((color) => {
+      setRootStylePropertyValue(
+        color as RootColorVariables,
+        colorsState[color as RootColorVariables]!
+      );
     });
   }, []);
 
@@ -31,12 +32,12 @@ const ColorsSettings: FC = () => {
     event: ChangeEvent<HTMLInputElement>,
     color: RootColorVariables
   ) => {
-    setRootStylePropertyValue(color, event.target.value);
-
-    setState({
-      ...state,
+    setColorsState({
+      ...colorsState,
       [color]: event.target.value,
     });
+
+    setRootStylePropertyValue(color, event.target.value);
   };
 
   return (
@@ -45,7 +46,7 @@ const ColorsSettings: FC = () => {
         Primary Color:&nbsp;
         <input
           type="text"
-          value={state?.["--primary-color"]}
+          value={colorsState?.["--primary-color"]}
           onChange={(event) =>
             ColorInputHandler(event, RootColorVariables.PrimaryColor)
           }
@@ -56,7 +57,7 @@ const ColorsSettings: FC = () => {
         Active Color:&nbsp;
         <input
           type="text"
-          value={state?.["--active-color"]}
+          value={colorsState?.["--active-color"]}
           onChange={(event) =>
             ColorInputHandler(event, RootColorVariables.ActiveColor)
           }
