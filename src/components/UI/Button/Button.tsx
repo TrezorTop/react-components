@@ -4,20 +4,18 @@ import classes from "./Button.module.scss";
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
   disabled?: boolean;
-  active?: boolean;
 }
 
 const Button: FC<IButtonProps> = ({
   children = "button",
   className,
-  active = false,
   disabled = false,
   onClick,
   ...attrs
 }) => {
   return (
     <button
-      className={[classes.Button, active && classes.Active].join(" ")}
+      className={[classes.Button].join(" ")}
       onClick={onClick}
       disabled={disabled}
       {...attrs}
