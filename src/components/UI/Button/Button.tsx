@@ -15,7 +15,7 @@ const Button: FC<IButtonProps> = ({
 }) => {
   return (
     <button
-      className={[classes.Button].join(" ")}
+      className={[classes.Button, className ?? null].join(" ")}
       onClick={onClick}
       disabled={disabled}
       {...attrs}

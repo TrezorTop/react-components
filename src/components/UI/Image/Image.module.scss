@@ -1,0 +1,16 @@
+.Container {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  background-color: var(--placeholder-color);
+
+  img {
+    width: 100%;
+
+    transition: var(--transition-short);
+  }
+}
