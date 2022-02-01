@@ -62,7 +62,7 @@ const App: FC = () => {
           </Paragraph>
           <Paragraph>
             <h3>Lazy Loading Image</h3>
-            <Image src={"https://wallpaperaccess.com/full/4582851.jpg"} />
+            <Image width={500} src={"https://wallpaperaccess.com/full/4582851.jpg"} />
           </Paragraph>
         </div>
       </div>
